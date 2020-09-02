@@ -17,7 +17,7 @@ model piece {
   video_info video_info[]
 }
 
-model sentence {
+model sentences {
   sentence   String?
   video_id   Int?
   created    DateTime?
@@ -27,13 +27,13 @@ model sentence {
 }
 
 model video_info {
-  id        Int        @default(autoincrement()) @id
+  id        Int         @default(autoincrement()) @id
   piece_id  Int?
   video_id  String?
   video_url String?
   created   DateTime?
   updated   DateTime?
   status    Boolean?
-  piece     piece?     @relation(fields: [piece_id], references: [id])
-  sentence  sentence[]
+  piece     piece?      @relation(fields: [piece_id], references: [id])
+  sentences sentences[]
 }
