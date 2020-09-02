@@ -14,8 +14,8 @@ class PieceController {
     }
 
     public intializeRoutes() {
-     //   this.router.post(this.path, this.createPiece);
-        this.router.post(this.path, this.createSentences);
+        this.router.post(this.path, this.createPiece);
+        //this.router.post(this.path, this.createSentences);
         this.router.get(this.path, this.getAllPiece);
     }
     formatDataCreatePieceAndUpdatePiece(requestData:any){
