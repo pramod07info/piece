@@ -10,7 +10,7 @@ const app = new App(
     new PieceController(),
     new VideoInfoController()
   ],
-  3000,
+  4000,
 );
  
 app.listen();
