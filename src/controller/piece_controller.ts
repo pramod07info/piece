@@ -5,7 +5,7 @@ import { isArray } from 'util';
 class PieceController {
     private pieceRepository = new PieceRepository();
     public path = '/piece';
-    //public pathSentences = '/sentences'
+    public pathPiece = '/piece/:id'
     public router = express.Router();
     public app = express();    
 
@@ -15,7 +15,7 @@ class PieceController {
 
     public intializeRoutes() {
         this.router.post(this.path, this.createPiece);
-        //this.router.post(this.path, this.createSentences);
+        this.router.get(this.pathPiece, this.getSinglePiece);
         this.router.get(this.path, this.getAllPiece);
     }
     formatDataCreatePieceAndUpdatePiece(requestData:any){
@@ -103,9 +103,10 @@ class PieceController {
         const result = await this.pieceRepository.createPieceAndVideo(pieceData)
         response.send(result);
     }
-    createSentences = async (request: express.Request, response: express.Response) => {
-        const result = await this.pieceRepository.createSentences(request)
-        response.send(result);
+   
+    getSinglePiece = async (request: express.Request, response: express.Response) => {
+        const result = await this.pieceRepository.getPieceById(request)
+        response.send(result)
     }
     getAllPiece = async (request: express.Request, response: express.Response) => {
         const result = await this.pieceRepository.get(request)

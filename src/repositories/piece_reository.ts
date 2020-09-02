@@ -1,14 +1,13 @@
 
 import { PrismaClient } from '@prisma/client'
-import { connect } from 'http2';
 
 const prisma = new PrismaClient()
 
 export class PieceRepository {
-	result: any;
+	
 	
 	async post(req: any) {	
-		console.log(req,"kkkkkkkkk");	
+		console.log(req,"kkkkkkkkk");
 		//console.dir(req.video_info.sentences);	
 		try {
 			// const result = null;
@@ -51,21 +50,20 @@ export class PieceRepository {
 
 	async createPieceAndVideo(req: any) {	
 		
-		try {
-			
+		try {			
 			if(req.id == null){
-				this.result = await prisma.piece.create({
+				const result = await prisma.piece.create({
 					data: req.data
 				})
+				return result;
 			}else{
-				this.result = await prisma.piece.upsert({
+				const result = await prisma.piece.upsert({
 					where: { id: req.id },
 					update: req.data,
 					create: req.data,
-				})	
+				})
+				return result;	
 			}
-			return this.result;	
-
 		} catch (error) {
 			console.error(error);
 			return error;
@@ -74,26 +72,7 @@ export class PieceRepository {
 		}
 		
 	}
-	async createSentences(req: any) {	
-		
-		try {
-			this.result = await prisma.sentences.create({
-				data: {
-					sentence: req.body.sentence,
-					video_info: {
-					  connect: { id: req.body.video_id },
-					},
-				  },
-			})
-			return this.result;	
-		} catch (error) {
-			console.error(error);
-			return error;
-		}finally{
-			async () => await prisma.$disconnect()
-		}
-		
-	}
+	
 	async get(req: any) {
 		try {
 			const result = await prisma.piece.findMany({
@@ -131,24 +110,37 @@ export class PieceRepository {
 			async () => await prisma.disconnect()
 		}	
 	}
-
-	// async update(req: any) {
-	// 	try {
-	// 		const result = await prisma.piece.update({
-	// 			//skip:req.body.skip,
-	// 			//take:req.body.take,
-	// 			where: {
-	// 				id: req.id,
-	// 			},
-				
-	// 		})
-	// 		return result	
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 		return error;
-	// 	}finally{
-	// 		async () => await prisma.disconnect()
-	// 	}	
-	// }
+	async getPieceById(req: any) {
+		try {
+			const result = await prisma.piece.findOne({				
+				where: {
+					id: parseInt(req.params.id),
+				},
+				select: {
+					id: true,
+					piece_id: true,
+					status: true,
+					title:true,
+					video_info:{
+						select:{
+							video_url:true,
+							video_id:true,
+							sentences:{
+								select:{
+									sentence:true
+								}
+							}
+						}
+					}
+				}
+			})
+			return result	
+		} catch (error) {
+			console.error(error);
+			return error;
+		}finally{
+			async () => await prisma.disconnect()
+		}	
+	}
 
 }
