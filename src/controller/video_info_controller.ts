@@ -5,6 +5,7 @@ import { VideoInfoRepository } from '../repositories/index'
 class VideoInfoController {
     private videoInfoRepository = new VideoInfoRepository();
     public path = '/videoInfo';
+    public pathDelete = '/videoInfo/:id';
     public router = express.Router();
     public app = express();
 
@@ -13,37 +14,12 @@ class VideoInfoController {
     }
 
     public intializeRoutes() {
-        this.router.post(this.path, this.createVideoInfo);
-        this.router.get(this.path, this.getAllVideoInfo);
+//        this.router.post(this.path, this.createVideoInfo);
+        this.router.delete(this.pathDelete, this.deleteVideoInfo);
     }
-
-    createVideoInfo = async (request: express.Request, response: express.Response) => {
-        const result = await this.videoInfoRepository.post(request)
-        // var viddeoInfo: IVideoInfo = {
-        //     id: String(result.id),
-        //     pieceId: result.piece_id,
-        //     videoId: result.video_id,
-        //     videoUrl:result.video_url,
-        //     status:result.status,
-            
-        // }
-        response.send("viddeoInfo")
-    }
-
-    getAllVideoInfo = async (request: express.Request, response: express.Response) => {
-        const result = await this.videoInfoRepository.get()
-        let videoInfos: IVideoInfo[] = [];
-        result.forEach(function(data){
-            // var videoInfo: IVideoInfo = {
-            //     id: String(data.id),
-            //     pieceId: data.piece_id,
-            //     videoId: data.video_id,
-            //     videoUrl:data.video_url,
-            //     status: data.status
-            // }
-            // videoInfos.push(videoInfo);
-        });
-        response.send(videoInfos)
+    deleteVideoInfo = async (request: express.Request, response: express.Response) => {
+        const result = await this.videoInfoRepository.deleteVideo(request)
+        response.send(result)
     }
 }
 

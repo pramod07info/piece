@@ -9,7 +9,7 @@ datasource db {
 
 model piece {
   id         Int          @default(autoincrement()) @id
-  piece_id   String?
+  user_id    String?      @unique
   title      String?
   status     String?
   created    DateTime?
@@ -33,7 +33,7 @@ model video_info {
   video_url String?
   created   DateTime?
   updated   DateTime?
-  status    Boolean?
+  status    String?
   piece     piece?      @relation(fields: [piece_id], references: [id])
   sentences sentences[]
 }

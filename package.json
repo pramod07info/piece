@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@prisma/client": "^2.5.1",
+    "@prisma/client": "^2.6.1",
     "@types/chai-http": "^4.2.0",
     "@types/node": "12.12.47",
     "@types/should": "^13.0.0",

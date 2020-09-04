@@ -1,9 +1,10 @@
 import express from 'express';
-import { PieceRepository, SentencesRepository } from '../repositories/index'
+import { SentencesRepository } from '../repositories/index'
 
 class SentencesController {
     private sentancesRepository = new SentencesRepository();
     public path = '/sentences';
+    public pathDelete = '/sentences/:id';
     public router = express.Router();
     public app = express();    
 
@@ -12,9 +13,10 @@ class SentencesController {
     }
 
     public intializeRoutes() {
-        
         this.router.post(this.path, this.createSentences);
-        this.router.get(this.path, this.getAllPiece);
+        this.router.put(this.path, this.updateSentences);
+        this.router.delete(this.pathDelete, this.deleteSentences);
+        
     }
     
     createSentences = async (request: express.Request, response: express.Response) => {
@@ -22,13 +24,14 @@ class SentencesController {
         response.send(result);
     }
     updateSentences = async (request: express.Request, response: express.Response) => {
-        const result = await this.sentancesRepository.createSentences(request)
+        const result = await this.sentancesRepository.updateSentances(request)
         response.send(result);
     }
-    getAllPiece = async (request: express.Request, response: express.Response) => {
-        const result = await this.sentancesRepository.get(request)
-        response.send(result)
+    deleteSentences = async (request: express.Request, response: express.Response) => {
+        const result = await this.sentancesRepository.deleteSentances(request)
+        response.send(result);
     }
+    
 }
 
 export default SentencesController;

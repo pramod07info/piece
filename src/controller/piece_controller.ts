@@ -5,7 +5,8 @@ import { isArray } from 'util';
 class PieceController {
     private pieceRepository = new PieceRepository();
     public path = '/piece';
-    public pathPiece = '/piece/:id'
+    public pathPiece = '/piece/:id/:status'
+    public pathPieceUserId = '/piece/getPieceByUserId'
     public router = express.Router();
     public app = express();    
 
@@ -17,10 +18,12 @@ class PieceController {
         this.router.post(this.path, this.createPiece);
         this.router.get(this.pathPiece, this.getSinglePiece);
         this.router.get(this.path, this.getAllPiece);
+        this.router.post(this.pathPieceUserId, this.getPieceByUserId);
     }
     formatDataCreatePieceAndUpdatePiece(requestData:any){
         let  actualData = {      
              title:"",
+             user_id: "",
              status:"",
              video_info:{
                  create:  [] as  any
@@ -31,6 +34,7 @@ class PieceController {
         requestData.videoInfo.forEach(function (value :any) {     
             let video_info ={
                 video_url:"",
+                status:"",
                 sentences:{
                     create: ''
                 }
@@ -42,32 +46,7 @@ class PieceController {
         });
         return actualData;
     }
-    formdataPiece(data:any){
-        let video_object = {
-            create: { video_url: '' },
-            update: { video_url: '' },
-            where: { id: 32},
-        };
-        let datainfo = {
-            where : {id : 10 },
-            data : {               
-                video_info: {
-                   upsert:[] as  any
-                 },
-            },
-        };
-
-        data.videoInfo.forEach(function (value :any) {  
-            video_object.create.video_url =   value.video_url;
-            video_object.update.video_url =   value.video_url;
-            video_object.where.id = 31 ;    
-            datainfo.data.video_info.upsert.push(video_object);     
-        });
-        console.log(datainfo,"datainfo");
-
-        
-        return datainfo;
-    }
+    
     formdataSentences(data:any){
         let sentences_object = {
             create: { sentence: '' },
@@ -112,6 +91,11 @@ class PieceController {
         const result = await this.pieceRepository.get(request)
         response.send(result)
     }
+    getPieceByUserId = async (request: express.Request, response: express.Response) => {
+        const result = await this.pieceRepository.getPieceByUserId(request)
+        response.send(result)
+    }
+    
 
     
 }

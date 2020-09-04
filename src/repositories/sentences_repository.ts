@@ -1,7 +1,10 @@
 
 import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import {IResponse} from '../model/index';
+//const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+	errorFormat: 'minimal',
+  })
 
 export class SentencesRepository {
 	result: any;
@@ -15,70 +18,86 @@ export class SentencesRepository {
 					},
 				  },
 			})
-			return this.result;	
+			
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Data created successfully",
+				data:this.result,
+				error:""
+			}
+			return iResponse;
 		} catch (error) {
 			console.error(error);
-			return error;
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Something went worng",
+				data:"",
+				error:error
+			}
+			return iResponse;
 		}finally{
 			async () => await prisma.$disconnect()
 		}
 		
     }
-    async Sentences(req: any) {	
+    async updateSentances(req: any) {	
 		try {
-			this.result = await prisma.sentences.create({
+			this.result = await prisma.sentences.update({
+				where: { id: req.body.id },
 				data: {
-					sentence: req.body.sentence,
+					sentence:req.body.sentence,
 					video_info: {
 					  connect: { id: req.body.video_id },
 					},
-				  },
-			})
-			return this.result;	
+				},
+			})			
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Data updated successfully",
+				data:this.result,
+				error:""
+			}
+			return iResponse;
 		} catch (error) {
 			console.error(error);
-			return error;
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Something went worng",
+				data:"",
+				error:error
+			}
+			return iResponse;
 		}finally{
 			async () => await prisma.$disconnect()
 		}
 		
 	}
-	async get(req: any) {
+	async deleteSentances(req: any) {	
 		try {
-			const result = await prisma.piece.findMany({
-				skip:req.body.skip,
-				take:req.body.take,
-				where: {
-					status: "PUBLISHED"
-				},
-				select: {
-					id: true,
-					piece_id: true,
-					status: true,
-					title:true,
-					video_info:{
-						select:{
-							video_url:true,
-							video_id:true,
-							sentences:{
-								select:{
-									sentence:true
-								}
-							}
-						}
-					}
-				},
-				orderBy: {
-					created: 'asc'
-				}
+			this.result = await prisma.sentences.delete({
+				where: { id: parseInt(req.params.id) }
 			})
-			return result	
+			
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Data deleted successfully",
+				data:this.result,
+				error:""
+			}
+			return iResponse;
 		} catch (error) {
 			console.error(error);
-			return error;
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Something went worng",
+				data:"",
+				error:error
+			}
+			return iResponse;
 		}finally{
-			async () => await prisma.disconnect()
+			async () => await prisma.$disconnect()
 		}	
 	}
+	
 
 }
