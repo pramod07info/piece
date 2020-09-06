@@ -14,8 +14,12 @@ class VideoInfoController {
     }
 
     public intializeRoutes() {
-//        this.router.post(this.path, this.createVideoInfo);
+        this.router.post(this.path, this.createVideoInfo);
         this.router.delete(this.pathDelete, this.deleteVideoInfo);
+    }
+    createVideoInfo = async (request: express.Request, response: express.Response) => {
+        const result = await this.videoInfoRepository.createVideo(request);
+        response.send(result)
     }
     deleteVideoInfo = async (request: express.Request, response: express.Response) => {
         const result = await this.videoInfoRepository.deleteVideo(request)

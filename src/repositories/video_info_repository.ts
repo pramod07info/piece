@@ -9,6 +9,43 @@ const prisma = new PrismaClient({
 
 export class VideoInfoRepository {
 	result:any;
+	async createVideo(req: any) {	
+		
+		try {			
+			const result = await prisma.video_info.create({
+				data:{
+					video_url:req.body.video_url,
+					status:"DRAFT",
+					piece:{
+						connect:{
+							id:req.body.piece_id
+						}
+					}
+				}
+			})
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Data created successfully",
+				data: result,
+				error:""
+			}
+			return iResponse;
+			
+		} catch (error) {
+			console.error(error);
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Something went worng",
+				data:"",
+				error:error
+			}
+			return iResponse;
+		}finally{
+			async () => await prisma.$disconnect()
+		}
+		
+	}
+
 	async deleteVideo(req: any) {	
 		try {
 			this.result = await prisma.video_info.update({

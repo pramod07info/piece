@@ -1,4 +1,7 @@
 Piece Create Request:-------
+URL:http://localhost:3000/piece
+Method: POST
+Request:--
 {
 	"title": "Yamamoto ekvfen Pomodoro method 4 data insert",
     "user_id":"12334sani",
@@ -44,8 +47,30 @@ Piece Response:---------
     },
     "error": ""
 }
+API:--Update Piece
+URL:http://localhost:3000/piece
+Method: put
+Request:--
+{
+    "id":27,
+    "title":"cdsdas daskjdhkasjd askjdsad asdkjasd askjd",
+    "status":"DELETE"
+}
 
-
+Response:---
+{
+    "statusCode": "200",
+    "message": "Data updated successfully",
+    "data": {
+        "id": 27,
+        "user_id": "1234",
+        "title": "cdsdas daskjdhkasjd askjdsad asdkjasd askjd",
+        "status": "DELETE",
+        "created": null,
+        "updated": null
+    },
+    "error": ""
+}
 
 Get piece data:-----------------
 Request:-----
@@ -168,6 +193,26 @@ Response:--
     ],
     "error": ""
 }
+
+Delete Piece:--------
+Url:http://localhost:3000/piece/27
+Method:DELETE
+Response:--------
+{
+    "statusCode": "200",
+    "message": "Data deleted successfully",
+    "data": {
+        "id": 27,
+        "user_id": "1234",
+        "title": "cdsdas daskjdhkasjd askjdsad asdkjasd askjd",
+        "status": "DELETE",
+        "created": null,
+        "updated": null
+    },
+    "error": ""
+}
+
+
 Create Sentences:--------
 Url:-http://localhost:3000/sentences
 Request: ------ Methost :---- Post
@@ -232,9 +277,33 @@ Response:----
     "error": ""
 }
 
+Create Video Info:----------
+URL:--
+Method:---POST
+Request:--
+{
+    "piece_id":27,
+    "video_url":"dslkmlsd lsadlkasdlka dlaskdlksad asdklsada"
+}
+Response:----
+{
+    "statusCode": "200",
+    "message": "Data created successfully",
+    "data": {
+        "id": 111,
+        "piece_id": 27,
+        "video_id": null,
+        "video_url": "dslkmlsd lsadlkasdlka dlaskdlksad asdklsada",
+        "created": null,
+        "updated": null,
+        "status": "DRAFT"
+    },
+    "error": ""
+}
+
 Delete Video Info:----------------
 Url:-- http://localhost:3000/videoInfo/103
-Method:-- Delete
+Method:-- DELETE
 Response:--
 {
     "statusCode": "200",

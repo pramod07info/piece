@@ -12,7 +12,7 @@ const app = new App(
     new VideoInfoController(),
     new SentencesController()
   ],
-  4000,
+  3000,
 );
  
 app.listen();

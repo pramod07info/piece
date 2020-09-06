@@ -62,32 +62,49 @@ export class PieceRepository {
 
 	async createPieceAndVideo(req: any) {	
 		
-		try {			
-			// if(req.id == null){
-				const result = await prisma.piece.create({
-					data: req.data
-				})
-				const iResponse: IResponse = {
-					statusCode:"200",
-					message:"Data created successfully",
-					data: result,
-					error:""
+		try {
+			const result = await prisma.piece.create({
+				data: req.data
+			})
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Data created successfully",
+				data: result,
+				error:""
+			}
+			return iResponse;
+		} catch (error) {
+			console.error(error);
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Something went worng",
+				data:"",
+				error:error
+			}
+			return iResponse;
+		}finally{
+			async () => await prisma.$disconnect()
+		}
+		
+	}
+	async updatePiece(req: any) {	
+		try {
+			const result = await prisma.piece.update({
+				where:{
+					id:req.body.id
+				},
+				data:{
+					title:req.body.title,
+					status:req.body.status
 				}
-				return iResponse;
-			// }else{
-			// 	const result = await prisma.piece.upsert({
-			// 		where: { id: req.id },
-			// 		update: req.data,
-			// 		create: req.data,
-			// 	})
-			// 	const iResponse: IResponse = {
-			// 		statusCode:"200",
-			// 		message:"Data created or updated successfully",
-			// 		data: result,
-			// 		error:""
-			// 	}
-			// 	return iResponse;
-			//}
+			})
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Data updated successfully",
+				data: result,
+				error:""
+			}
+			return iResponse;
 		} catch (error) {
 			console.error(error);
 			const iResponse: IResponse = {
@@ -109,8 +126,7 @@ export class PieceRepository {
 				skip:req.body.skip,
 				take:req.body.take,
 				where: {
-					status: req.body.status,
-					
+					status: req.body.status,			
 				},
 				select: {
 					id: true,
@@ -160,14 +176,9 @@ export class PieceRepository {
 	}
 	async getPieceById(req: any) {
 		try {
-			const result = await prisma.piece.findMany({				
+			const result = await prisma.piece.findOne({				
 				where: {
-					id: parseInt(req.params.id),
-					AND:[
-						{
-							status:req.params.status
-						}
-					]
+					id: parseInt(req.params.id)
 				},
 				select: {
 					id: true,
@@ -190,9 +201,6 @@ export class PieceRepository {
 							}
 						}
 					}
-				},
-				orderBy: {
-					created: 'asc'
 				}
 			})
 			const iResponse: IResponse = {
@@ -219,12 +227,8 @@ export class PieceRepository {
 		try {
 			const result = await prisma.piece.findMany({				
 				where: {
-					user_id: req.body.user_id,
-					AND:[
-						{
-							status:req.body.status
-						}
-					]
+					user_id: req.body.user_id
+					
 				},
 				select: {
 					id: true,
@@ -271,5 +275,35 @@ export class PieceRepository {
 		}finally{
 			async () => await prisma.disconnect()
 		}	
+	}
+	async deletePiece(req: any) {	
+		try {
+			const result = await prisma.piece.update({
+				where:{
+					id:parseInt(req.params.id)
+				},
+				data:{
+					status:"DELETE",
+				}
+			})
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Data deleted successfully",
+				data: result,
+				error:""
+			}
+			return iResponse;
+		} catch (error) {
+			console.error(error);
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Something went worng",
+				data:"",
+				error:error
+			}
+			return iResponse;
+		}finally{
+			async () => await prisma.$disconnect()
+		}		
 	}
 }

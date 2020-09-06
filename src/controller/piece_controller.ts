@@ -5,7 +5,8 @@ import { isArray } from 'util';
 class PieceController {
     private pieceRepository = new PieceRepository();
     public path = '/piece';
-    public pathPiece = '/piece/:id/:status'
+    public pathDeletePiece = '/piece/:id';
+    public pathPiece = '/piece/:id'
     public pathPieceUserId = '/piece/getPieceByUserId'
     public router = express.Router();
     public app = express();    
@@ -16,9 +17,11 @@ class PieceController {
 
     public intializeRoutes() {
         this.router.post(this.path, this.createPiece);
+        this.router.put(this.path, this.updatePiece);
         this.router.get(this.pathPiece, this.getSinglePiece);
         this.router.get(this.path, this.getAllPiece);
         this.router.post(this.pathPieceUserId, this.getPieceByUserId);
+        this.router.delete(this.pathDeletePiece, this.deletePiece);
     }
     formatDataCreatePieceAndUpdatePiece(requestData:any){
         let  actualData = {      
@@ -31,6 +34,8 @@ class PieceController {
            };
         actualData.title =requestData.title;
         actualData.status =requestData.status; 
+        actualData.user_id =requestData.user_id;
+
         requestData.videoInfo.forEach(function (value :any) {     
             let video_info ={
                 video_url:"",
@@ -40,6 +45,7 @@ class PieceController {
                 }
             };
             video_info.video_url = value.video_url;
+            video_info.status = value.status;
             video_info.sentences.create = value.sentences;
             actualData.video_info.create.push(video_info);
               
@@ -82,7 +88,10 @@ class PieceController {
         const result = await this.pieceRepository.createPieceAndVideo(pieceData)
         response.send(result);
     }
-   
+    updatePiece = async (request: express.Request, response: express.Response) => {
+        const result = await this.pieceRepository.updatePiece(request);
+        response.send(result);
+    }
     getSinglePiece = async (request: express.Request, response: express.Response) => {
         const result = await this.pieceRepository.getPieceById(request)
         response.send(result)
@@ -95,7 +104,10 @@ class PieceController {
         const result = await this.pieceRepository.getPieceByUserId(request)
         response.send(result)
     }
-    
+    deletePiece = async (request: express.Request, response: express.Response) => {
+        const result = await this.pieceRepository.deletePiece(request);
+        response.send(result);
+    }
 
     
 }
