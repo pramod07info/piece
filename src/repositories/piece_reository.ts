@@ -144,6 +144,7 @@ export class PieceRepository {
 							status:true,
 							sentences:{
 								select:{
+									id:true,
 									sentence:true
 								}
 							}
@@ -196,6 +197,7 @@ export class PieceRepository {
 							status:true,
 							sentences:{
 								select:{
+									id:true,
 									sentence:true
 								}
 							}
@@ -246,6 +248,7 @@ export class PieceRepository {
 							status:true,
 							sentences:{
 								select:{
+									id:true,
 									sentence:true
 								}
 							}
