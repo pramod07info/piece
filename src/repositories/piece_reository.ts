@@ -1,7 +1,10 @@
 
 import { PrismaClient } from '@prisma/client'
 import {IResponse} from '../model/index';
+import { group } from 'console';
+import { mainModule } from 'process';
 //const prisma = new PrismaClient()
+
 const prisma = new PrismaClient({
 	errorFormat: 'minimal',
 	log: [
@@ -18,6 +21,7 @@ const prisma = new PrismaClient({
 export class PieceRepository {
 	
 	result:any;
+	mymap:Map<string, number> | undefined
 	async post(req: any) {	
 		console.log(req,"kkkkkkkkk");
 		//console.dir(req.video_info.sentences);	
@@ -314,13 +318,33 @@ export class PieceRepository {
 		}		
 	}
 	async getAllCount(req: any) {
-		console.log("sdhakdkjasdhjasd ahdjkashdkashdas kjashsdkjashdkjashd asksdaksd");
 		try {
-			const result = await prisma.piece.count()
+			const Allresult = await prisma.piece.count()
+			const draftResult = await prisma.piece.count({
+				where:{
+					status:"DRAFT"
+				}
+			})
+			const publishedResult = await prisma.piece.count({
+				where:{
+					status:"PUBLISH"
+				}
+			})
+			const deletedResult = await prisma.piece.count({
+				where:{
+					status:"DELETE"
+				}
+			})
+			
 			const iResponse: IResponse = {
 				statusCode:"200",
-				message:"Data deleted successfully",
-				data: result,
+				message:"Fetch count successfully",
+				data:{
+					"All":Allresult,
+					"Draft":draftResult,
+					"Published":publishedResult,
+					"Deleted":deletedResult
+				},
 				error:""
 			}
 			return iResponse;

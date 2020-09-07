@@ -2,13 +2,14 @@ import express from 'express';
 import { IPiece } from '../model/index'
 import { PieceRepository } from '../repositories/index'
 import { isArray } from 'util';
+import cors from 'cors';
 class PieceController {
     private pieceRepository = new PieceRepository();
     public path = '/piece';
     public pathDeletePiece = '/piece/:id';
     public pathPiece = '/piece/:id';
     public pathPieceUserId = '/piece/getPieceByUserId';
-    public pathGetAllCount = 'piece/getAllCount';
+    public pathGetAllCount = '/piece/getAllCount';
     public router = express.Router();
     public app = express();
 
@@ -17,13 +18,16 @@ class PieceController {
     }
 
     public intializeRoutes() {
-        this.router.post(this.path, this.createPiece);
-        this.router.put(this.path, this.updatePiece);
-        this.router.get(this.pathPiece, this.getSinglePiece);
-        this.router.get(this.path, this.getAllPiece);
-        this.router.get(this.pathGetAllCount, this.getAllCount);
-        this.router.post(this.pathPieceUserId, this.getPieceByUserId);
-        this.router.delete(this.pathDeletePiece, this.deletePiece);
+
+
+        this.router.post(this.path,cors(), this.createPiece);
+        this.router.put(this.path,cors(), this.updatePiece);
+        this.router.get(this.pathPiece,cors(), this.getSinglePiece);
+        this.router.get(this.path,cors(), this.getAllPiece);
+        this.router.get(this.pathPieceUserId,cors(), this.getPieceByUserId);
+        this.router.delete(this.pathDeletePiece,cors(), this.deletePiece);
+        this.router.post(this.pathGetAllCount, cors(),this.getAllCount);
+
     }
     formatDataCreatePieceAndUpdatePiece(requestData:any){
         let  actualData = {      
@@ -95,6 +99,7 @@ class PieceController {
         response.send(result);
     }
     getSinglePiece = async (request: express.Request, response: express.Response) => {
+        
         const result = await this.pieceRepository.getPieceById(request)
         response.send(result)
     }
@@ -103,6 +108,7 @@ class PieceController {
         response.send(result)
     }
     getPieceByUserId = async (request: express.Request, response: express.Response) => {
+    
         const result = await this.pieceRepository.getPieceByUserId(request)
         response.send(result)
     }
