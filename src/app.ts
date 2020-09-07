@@ -8,7 +8,7 @@ class App {
     public app: express.Application;
     public port: number;
 
-    corsOptions = {
+    private corsOptions = {
         origin: 'https://sofadog-newsflare.vercel.app',
         optionsSuccessStatus: 200
     }
@@ -32,7 +32,7 @@ class App {
 
     private initializeControllers(controllers: any[]) {
         controllers.forEach((controller) => {
-            this.app.use('/', controller.router);
+            this.app.use('/', cors(this.corsOptions),controller.router);
         });
     }
 
