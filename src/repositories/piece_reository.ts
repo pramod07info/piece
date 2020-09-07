@@ -126,7 +126,7 @@ export class PieceRepository {
 				skip:req.body.skip,
 				take:req.body.take,
 				where: {
-					status: req.body.status,			
+					OR:req.body.status
 				},
 				select: {
 					id: true,
@@ -135,7 +135,7 @@ export class PieceRepository {
 					title:true,
 					video_info:{
 						where:{
-							status:req.body.status
+							OR:req.body.status
 						},
 						select:{
 							id:true,
@@ -227,10 +227,14 @@ export class PieceRepository {
 	}
 	async getPieceByUserId(req: any) {
 		try {
-			const result = await prisma.piece.findMany({				
+			const result = await prisma.piece.findMany({	
+				skip:req.body.skip,
+				take:req.body.take,			
 				where: {
-					user_id: req.body.user_id
-					
+					OR:req.body.status,					
+					AND:{
+						user_id: req.body.user_id,
+					}				
 				},
 				select: {
 					id: true,
@@ -239,7 +243,7 @@ export class PieceRepository {
 					title:true,
 					video_info:{
 						where:{
-							status:req.body.status
+							OR:req.body.status
 						},
 						select:{
 							id:true,
