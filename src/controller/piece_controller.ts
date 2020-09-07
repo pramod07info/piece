@@ -36,7 +36,7 @@ class PieceController {
         actualData.status =requestData.status; 
         actualData.user_id =requestData.user_id;
 
-        requestData.videoInfo.forEach(function (value :any) {     
+        requestData.video_info.forEach(function (value :any) {     
             let video_info ={
                 video_url:"",
                 status:"",
@@ -68,7 +68,7 @@ class PieceController {
             },
         };
 
-        data.videoInfo.sentences.forEach(function (value :any) {  
+        data.video_info.sentences.forEach(function (value :any) {  
             sentences_object.create.sentence =   value.video_url;
             sentences_object.update.sentence =   value.video_url;
             sentences_object.where.id = value.id || 0 ;    
