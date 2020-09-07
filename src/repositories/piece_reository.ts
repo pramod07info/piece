@@ -313,4 +313,28 @@ export class PieceRepository {
 			async () => await prisma.$disconnect()
 		}		
 	}
+	async getAllCount(req: any) {
+		console.log("sdhakdkjasdhjasd ahdjkashdkashdas kjashsdkjashdkjashd asksdaksd");
+		try {
+			const result = await prisma.piece.count()
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Data deleted successfully",
+				data: result,
+				error:""
+			}
+			return iResponse;
+		} catch (error) {
+			console.error(error);
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Something went worng",
+				data:"",
+				error:error
+			}
+			return iResponse;
+		}finally{
+			async () => await prisma.$disconnect()
+		}		
+	}
 }
