@@ -75,10 +75,24 @@ Response:---
 Get piece data:-----------------
 Request:-----
 
+
 {
     "skip":0,
     "take":3,
-    "status":"DRAFT"
+    "status":[
+       {
+            "status": 
+            {
+                "contains": "DRAFT"
+            }
+        },
+        {
+            "status": 
+            {
+                "contains": "DELETE"
+            }
+        }
+    ]
 }
 
 
@@ -88,21 +102,35 @@ Response:--
     "message": "Fetch all data successfully",
     "data": [
         {
-            "id": 27,
-            "user_id": "1234",
+            "id": 32,
+            "user_id": "sdf",
             "status": "DRAFT",
             "title": "Yamamoto ekvfen Pomodoro method 4 data insert",
             "video_info": [
                 {
-                    "id": 104,
+                    "id": 107,
+                    "video_url": "https://so-fa-dog-ou-res.cloudinary.com/video/upload/v1595848639/20200727_RIP.Yamamoto_ekvfen.mp4",
+                    "video_id": null,
+                    "status": "DRAFT",
+                    "sentences": [
+                        {
+                            "id": 224,
+                            "sentence": "Pomodoro method1 fddfgdfsdfsd"
+                        }
+                    ]
+                },
+                {
+                    "id": 108,
                     "video_url": "https://so-fa-dog-ou-res.cloudinary.com/video/upload/v1593099640/samples/20200625_Pomodoro.Method_Re_xvhnk3.mp4",
                     "video_id": null,
                     "status": "DRAFT",
                     "sentences": [
                         {
+                            "id": 225,
                             "sentence": "Yamamoto_ekvfen1"
                         },
                         {
+                            "id": 226,
                             "sentence": "Yamamoto_ekvfen2"
                         }
                     ]
@@ -110,11 +138,94 @@ Response:--
             ]
         },
         {
+            "id": 27,
+            "user_id": "1234",
+            "status": "DELETE",
+            "title": "cdsdas daskjdhkasjd askjdsad asdkjasd askjd",
+            "video_info": [
+                {
+                    "id": 103,
+                    "video_url": "https://so-fa-dog-ou-res.cloudinary.com/video/upload/v1595848639/20200727_RIP.Yamamoto_ekvfen.mp4",
+                    "video_id": null,
+                    "status": "DELETE",
+                    "sentences": [
+                        {
+                            "id": 214,
+                            "sentence": "Pomodoro method1 dfgfdg"
+                        },
+                        {
+                            "id": 215,
+                            "sentence": "Pomodoro method1 fddfgdfsdfsd"
+                        }
+                    ]
+                },
+                {
+                    "id": 104,
+                    "video_url": "https://so-fa-dog-ou-res.cloudinary.com/video/upload/v1593099640/samples/20200625_Pomodoro.Method_Re_xvhnk3.mp4",
+                    "video_id": null,
+                    "status": "DRAFT",
+                    "sentences": [
+                        {
+                            "id": 216,
+                            "sentence": "Yamamoto_ekvfen1"
+                        },
+                        {
+                            "id": 217,
+                            "sentence": "Yamamoto_ekvfen2"
+                        }
+                    ]
+                },
+                {
+                    "id": 110,
+                    "video_url": "sdsfdsas",
+                    "video_id": null,
+                    "status": "DRAFT",
+                    "sentences": []
+                },
+                {
+                    "id": 111,
+                    "video_url": "dslkmlsd lsadlkasdlka dlaskdlksad asdklsada",
+                    "video_id": null,
+                    "status": "DRAFT",
+                    "sentences": []
+                }
+            ]
+        },
+        {
             "id": 28,
-            "user_id": "",
-            "status": "DRAFT",
+            "user_id": "sdada",
+            "status": "DELETE",
             "title": "Yamamoto ekvfen Pomodoro method 4 data insert",
-            "video_info": []
+            "video_info": [
+                {
+                    "id": 106,
+                    "video_url": "https://so-fa-dog-ou-res.cloudinary.com/video/upload/v1593099640/samples/20200625_Pomodoro.Method_Re_xvhnk3.mp4",
+                    "video_id": null,
+                    "status": "DELETE",
+                    "sentences": [
+                        {
+                            "id": 220,
+                            "sentence": "Yamamoto_ekvfen1"
+                        },
+                        {
+                            "id": 221,
+                            "sentence": "Yamamoto_ekvfen2"
+                        },
+                        {
+                            "id": 227,
+                            "sentence": "Pomodoro method1 dfgfdgsdsd"
+                        },
+                        {
+                            "id": 228,
+                            "sentence": "Pomodoro method1 xcvxcvxcvxc"
+                        },
+                        {
+                            "id": 229,
+                            "sentence": "Pomodoro method1 xcvxcxxxcxzczxcvxcvxc"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "error": ""
@@ -159,9 +270,25 @@ Response:---
 Get Piece By UserId and Status:-------------
 Url:-http://localhost:3000/piece/getPieceByUserId
 Request: ------ Methost :---- Post
+
 {
+    "skip":0,
+    "take":3,
     "user_id":"1234",
-    "status":"DRAFT"
+    "status":[
+       {
+            "status": 
+            {
+                "contains": "DRAFT"
+            }
+        },
+        {
+            "status": 
+            {
+                "contains": "DELETE"
+            }
+        }
+    ]
 }
 Response:--
 {
@@ -171,9 +298,25 @@ Response:--
         {
             "id": 27,
             "user_id": "1234",
-            "status": "DRAFT",
-            "title": "Yamamoto ekvfen Pomodoro method 4 data insert",
+            "status": "DELETE",
+            "title": "cdsdas daskjdhkasjd askjdsad asdkjasd askjd",
             "video_info": [
+                {
+                    "id": 103,
+                    "video_url": "https://so-fa-dog-ou-res.cloudinary.com/video/upload/v1595848639/20200727_RIP.Yamamoto_ekvfen.mp4",
+                    "video_id": null,
+                    "status": "DELETE",
+                    "sentences": [
+                        {
+                            "id": 214,
+                            "sentence": "Pomodoro method1 dfgfdg"
+                        },
+                        {
+                            "id": 215,
+                            "sentence": "Pomodoro method1 fddfgdfsdfsd"
+                        }
+                    ]
+                },
                 {
                     "id": 104,
                     "video_url": "https://so-fa-dog-ou-res.cloudinary.com/video/upload/v1593099640/samples/20200625_Pomodoro.Method_Re_xvhnk3.mp4",
@@ -181,12 +324,28 @@ Response:--
                     "status": "DRAFT",
                     "sentences": [
                         {
+                            "id": 216,
                             "sentence": "Yamamoto_ekvfen1"
                         },
                         {
+                            "id": 217,
                             "sentence": "Yamamoto_ekvfen2"
                         }
                     ]
+                },
+                {
+                    "id": 110,
+                    "video_url": "sdsfdsas",
+                    "video_id": null,
+                    "status": "DRAFT",
+                    "sentences": []
+                },
+                {
+                    "id": 111,
+                    "video_url": "dslkmlsd lsadlkasdlka dlaskdlksad asdklsada",
+                    "video_id": null,
+                    "status": "DRAFT",
+                    "sentences": []
                 }
             ]
         }
