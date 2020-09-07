@@ -2,6 +2,7 @@ import express from 'express';
 import { IPiece } from '../model/index'
 import { PieceRepository } from '../repositories/index'
 import { isArray } from 'util';
+import cors from 'cors';
 class PieceController {
     private pieceRepository = new PieceRepository();
     public path = '/piece';
@@ -16,12 +17,12 @@ class PieceController {
     }
 
     public intializeRoutes() {
-        this.router.post(this.path, this.createPiece);
-        this.router.put(this.path, this.updatePiece);
-        this.router.get(this.pathPiece, this.getSinglePiece);
-        this.router.get(this.path, this.getAllPiece);
-        this.router.post(this.pathPieceUserId, this.getPieceByUserId);
-        this.router.delete(this.pathDeletePiece, this.deletePiece);
+        this.router.post(this.path,cors(), this.createPiece);
+        this.router.put(this.path,cors(), this.updatePiece);
+        this.router.get(this.pathPiece,cors(), this.getSinglePiece);
+        this.router.get(this.path,cors(), this.getAllPiece);
+        this.router.post(this.pathPieceUserId,cors(), this.getPieceByUserId);
+        this.router.delete(this.pathDeletePiece,cors(), this.deletePiece);
     }
     formatDataCreatePieceAndUpdatePiece(requestData:any){
         let  actualData = {      
