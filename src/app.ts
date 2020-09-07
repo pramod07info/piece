@@ -16,11 +16,7 @@ class App {
     constructor(controllers: any, port: number) {
         this.app = express();
         this.port = port;
-        this.app
-            .use(cors(this.corsOptions))
-            .use(cors({ origin: '*' }))
-            .use(bodyParser.urlencoded({ extended: true }))
-            .use(bodyParser.json());
+        this.app.options('*', cors()) ;
 
         this.initializeMiddlewares();
         this.initializeControllers(controllers);
@@ -32,7 +28,7 @@ class App {
 
     private initializeControllers(controllers: any[]) {
         controllers.forEach((controller) => {
-            this.app.use('/', cors(this.corsOptions),controller.router);
+            this.app.use('/', cors(), controller.router);
         });
     }
 
