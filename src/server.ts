@@ -5,7 +5,7 @@ import SentencesController from './controller/sentences-controller';
 
 
 
-const PORT : string|number = process.env.PORT || 8888;
+const PORT : number = Number(process.env.PORT) || 8888;
 const app = new App(
   [
     new PieceController(),
