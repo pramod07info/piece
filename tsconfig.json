@@ -1,11 +1,5 @@
 {
   "compilerOptions": {
-    "include": [
-      "src/**/*.ts"
-    ],
-    "exclude": [
-      "node_modules"
-    ],
     "sourceMap": true,
     "outDir": "dist",
     "strict": true,
@@ -13,5 +7,11 @@
       "esnext"
     ],
     "esModuleInterop": true
-  }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
