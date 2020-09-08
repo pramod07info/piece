@@ -6,22 +6,36 @@ class PieceController {
     private pieceRepository = new PieceRepository();
     public path = '/piece';
     public pathDeletePiece = '/piece/:id';
-    public pathPiece = '/piece/:id'
-    public pathPieceUserId = '/piece/getPieceByUserId'
+    public pathPiece = '/piece/:id';
+    public pathPieceUserId = '/piece/getPieceByUserId';
+    public pathGetAllCount = '/piece/getAllCount';
     public router = express.Router();
-    public app = express();    
+    public app = express();
 
     constructor() {
         this.intializeRoutes();
     }
 
     public intializeRoutes() {
+<<<<<<< HEAD
         this.router.post(this.path, this.createPiece);
         this.router.put(this.path, this.updatePiece);
         this.router.get(this.pathPiece, this.getSinglePiece);
         this.router.get(this.path, this.getAllPiece);
         this.router.post(this.pathPieceUserId, this.getPieceByUserId);
         this.router.delete(this.pathDeletePiece, this.deletePiece);
+=======
+
+
+        this.router.post(this.path,cors(), this.createPiece);
+        this.router.put(this.path,cors(), this.updatePiece);
+        this.router.get(this.pathPiece,cors(), this.getSinglePiece);
+        this.router.get(this.path,cors(), this.getAllPiece);
+        this.router.get(this.pathPieceUserId,cors(), this.getPieceByUserId);
+        this.router.delete(this.pathDeletePiece,cors(), this.deletePiece);
+        this.router.post(this.pathGetAllCount, cors(),this.getAllCount);
+
+>>>>>>> 244a72a0b2040984e622ae7af8753f51e54ffa58
     }
     formatDataCreatePieceAndUpdatePiece(requestData:any){
         let  actualData = {      
@@ -68,7 +82,7 @@ class PieceController {
             },
         };
 
-        data.video_info.sentences.forEach(function (value :any) {  
+        data.videoInfo.sentences.forEach(function (value :any) {  
             sentences_object.create.sentence =   value.video_url;
             sentences_object.update.sentence =   value.video_url;
             sentences_object.where.id = value.id || 0 ;    
@@ -93,6 +107,7 @@ class PieceController {
         response.send(result);
     }
     getSinglePiece = async (request: express.Request, response: express.Response) => {
+        
         const result = await this.pieceRepository.getPieceById(request)
         response.send(result)
     }
@@ -101,6 +116,7 @@ class PieceController {
         response.send(result)
     }
     getPieceByUserId = async (request: express.Request, response: express.Response) => {
+    
         const result = await this.pieceRepository.getPieceByUserId(request)
         response.send(result)
     }
@@ -108,7 +124,11 @@ class PieceController {
         const result = await this.pieceRepository.deletePiece(request);
         response.send(result);
     }
-
+    getAllCount = async (request: express.Request, response: express.Response) => {
+        console.log("cpntroller getallCount");
+        const result = await this.pieceRepository.getAllCount(request);
+        response.send(result);
+    }
     
 }
 
