@@ -5,15 +5,16 @@ import SentencesController from './controller/sentences-controller';
 
 
 
- 
+const PORT : string|number = process.env.PORT || 8888;
 const app = new App(
   [
     new PieceController(),
     new VideoInfoController(),
     new SentencesController()
   ],
-  8888,
+  PORT,
 );
  
 app.listen();
+
 
