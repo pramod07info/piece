@@ -6,10 +6,11 @@ class PieceController {
     private pieceRepository = new PieceRepository();
     public path = '/piece';
     public pathDeletePiece = '/piece/:id';
-    public pathPiece = '/piece/:id'
-    public pathPieceUserId = '/piece/getPieceByUserId'
+    public pathPiece = '/piece/:id';
+    public pathPieceUserId = '/piece/getPieceByUserId';
+    public pathGetAllCount = '/piece/getAllCount';
     public router = express.Router();
-    public app = express();    
+    public app = express();
 
     constructor() {
         this.intializeRoutes();
@@ -69,7 +70,7 @@ class PieceController {
             },
         };
 
-        data.video_info.sentences.forEach(function (value :any) {  
+        data.videoInfo.sentences.forEach(function (value :any) {  
             sentences_object.create.sentence =   value.video_url;
             sentences_object.update.sentence =   value.video_url;
             sentences_object.where.id = value.id || 0 ;    
@@ -94,6 +95,7 @@ class PieceController {
         response.send(result);
     }
     getSinglePiece = async (request: express.Request, response: express.Response) => {
+        
         const result = await this.pieceRepository.getPieceById(request)
         response.send(result)
     }
@@ -102,6 +104,7 @@ class PieceController {
         response.send(result)
     }
     getPieceByUserId = async (request: express.Request, response: express.Response) => {
+    
         const result = await this.pieceRepository.getPieceByUserId(request)
         response.send(result)
     }
@@ -109,7 +112,11 @@ class PieceController {
         const result = await this.pieceRepository.deletePiece(request);
         response.send(result);
     }
-
+    getAllCount = async (request: express.Request, response: express.Response) => {
+        console.log("cpntroller getallCount");
+        const result = await this.pieceRepository.getAllCount(request);
+        response.send(result);
+    }
     
 }
 
