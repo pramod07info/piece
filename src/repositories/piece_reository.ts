@@ -246,9 +246,6 @@ export class PieceRepository {
 					status: true,
 					title:true,
 					video_info:{
-						where:{
-							OR:req.body.status
-						},
 						select:{
 							id:true,
 							video_url:true,
@@ -333,6 +330,57 @@ export class PieceRepository {
 			const deletedResult = await prisma.piece.count({
 				where:{
 					status:"DELETE"
+				}
+			})
+			
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Fetch count successfully",
+				data:{
+					"All":Allresult,
+					"Draft":draftResult,
+					"Published":publishedResult,
+					"Deleted":deletedResult
+				},
+				error:""
+			}
+			return iResponse;
+		} catch (error) {
+			console.error(error);
+			const iResponse: IResponse = {
+				statusCode:"200",
+				message:"Something went worng",
+				data:"",
+				error:error
+			}
+			return iResponse;
+		}finally{
+			async () => await prisma.$disconnect()
+		}		
+	}
+	async getCountByUserId(req: any) {
+		try {
+			const Allresult = await prisma.piece.count({
+				where:{
+					user_id:req.body.user_id
+				}
+			})
+			const draftResult = await prisma.piece.count({
+				where:{
+					status:"DRAFT",
+					user_id:req.body.user_id
+				}
+			})
+			const publishedResult = await prisma.piece.count({
+				where:{
+					status:"PUBLISH",
+					user_id:req.body.user_id
+				}
+			})
+			const deletedResult = await prisma.piece.count({
+				where:{
+					status:"DELETE",
+					user_id:req.body.user_id
 				}
 			})
 			

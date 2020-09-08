@@ -48,12 +48,8 @@ export class VideoInfoRepository {
 
 	async deleteVideo(req: any) {	
 		try {
-			this.result = await prisma.video_info.update({
+			this.result = await prisma.video_info.delete({
 				where: { id: parseInt(req.params.id) },
-				data:{
-					status:"DELETE"
-				}
-
 			})
 			
 			const iResponse: IResponse = {
