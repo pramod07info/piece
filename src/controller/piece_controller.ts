@@ -19,7 +19,6 @@ class PieceController {
     }
 
     public intializeRoutes() {
-
         this.router.post(this.path,cors(), this.createPiece);
         this.router.put(this.path,cors(), this.updatePiece);
         this.router.get(this.pathPiece,cors(), this.getSinglePiece);
@@ -29,7 +28,7 @@ class PieceController {
         this.router.post(this.pathGetAllCount, cors(),this.getAllCount);
         this.router.post(this.pathGetCountByUserId, cors(),this.getCountByUserId);
 
-    }
+}
     formatDataCreatePieceAndUpdatePiece(requestData:any){
         let  actualData = {      
              title:"",

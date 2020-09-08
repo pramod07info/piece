@@ -1,3 +1,17 @@
+heroku git:remote -a piece-endpoint
+git remote -v
+git push heroku master
+https://piece-endpoint.herokuapp.com/
+https://sofadog-newsflare.vercel.app/app/pieces/preview
+
+
+You need to open your chrome with following command. (Press window+R)
+
+chrome.exe --user-data-dir="C:/Chrome dev session" --disable-web-security
+
+Kundan@123 ====== password
+
+
 http://localhost:8888/piece
 
 {
