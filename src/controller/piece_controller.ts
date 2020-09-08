@@ -32,6 +32,7 @@ class PieceController {
                  create:  [] as  any
              }
            };
+           console.log("requestData: ",requestData)
         actualData.title =requestData.title;
         actualData.status =requestData.status; 
         actualData.user_id =requestData.user_id;
