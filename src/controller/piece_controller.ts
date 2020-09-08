@@ -17,25 +17,12 @@ class PieceController {
     }
 
     public intializeRoutes() {
-<<<<<<< HEAD
         this.router.post(this.path, this.createPiece);
         this.router.put(this.path, this.updatePiece);
         this.router.get(this.pathPiece, this.getSinglePiece);
         this.router.get(this.path, this.getAllPiece);
         this.router.post(this.pathPieceUserId, this.getPieceByUserId);
         this.router.delete(this.pathDeletePiece, this.deletePiece);
-=======
-
-
-        this.router.post(this.path,cors(), this.createPiece);
-        this.router.put(this.path,cors(), this.updatePiece);
-        this.router.get(this.pathPiece,cors(), this.getSinglePiece);
-        this.router.get(this.path,cors(), this.getAllPiece);
-        this.router.get(this.pathPieceUserId,cors(), this.getPieceByUserId);
-        this.router.delete(this.pathDeletePiece,cors(), this.deletePiece);
-        this.router.post(this.pathGetAllCount, cors(),this.getAllCount);
-
->>>>>>> 244a72a0b2040984e622ae7af8753f51e54ffa58
     }
     formatDataCreatePieceAndUpdatePiece(requestData:any){
         let  actualData = {      
