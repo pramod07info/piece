@@ -367,6 +367,7 @@ export class PieceRepository {
 	}
 	async getCountByUserId(req: any) {
 		try {
+			console.log("user id: ",req.body.user_id);
 			const Allresult = await prisma.piece.count({
 				where: {
 					user_id: req.body.user_id
