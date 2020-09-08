@@ -479,4 +479,42 @@ Response:--
     "error": ""
 }
 
+GetAllCount:----------------
+Url:-- http://localhost:3000/piece/getAllCount
+Method:-- Post
+Response:{
+    "statusCode": "200",
+    "message": "Fetch count successfully",
+    "data": {
+        "All": 3,
+        "Draft": 1,
+        "Published": 1,
+        "Deleted": 1
+    },
+    "error": ""
+}
+
+GetCountByUserId:----------------
+Url:-- http://localhost:3000/piece/getCountByUserId
+Method:-- POST
+Request:
+    {
+        "user_id":"1234"
+    }
+Response:--{
+    "statusCode": "200",
+    "message": "Fetch count successfully",
+    "data": {
+        "All": 2,
+        "Draft": 0,
+        "Published": 1,
+        "Deleted": 1
+    },
+    "error": ""
+}
+
+
+
+
+
 

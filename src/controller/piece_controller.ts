@@ -10,6 +10,7 @@ class PieceController {
     public pathPiece = '/piece/:id';
     public pathPieceUserId = '/piece/getPieceByUserId';
     public pathGetAllCount = '/piece/getAllCount';
+    public pathGetCountByUserId = '/piece/getCountByUserId';
     public router = express.Router();
     public app = express();
 
@@ -19,14 +20,14 @@ class PieceController {
 
     public intializeRoutes() {
 
-
         this.router.post(this.path,cors(), this.createPiece);
         this.router.put(this.path,cors(), this.updatePiece);
         this.router.get(this.pathPiece,cors(), this.getSinglePiece);
         this.router.get(this.path,cors(), this.getAllPiece);
-        this.router.get(this.pathPieceUserId,cors(), this.getPieceByUserId);
+        this.router.post(this.pathPieceUserId,cors(), this.getPieceByUserId);
         this.router.delete(this.pathDeletePiece,cors(), this.deletePiece);
         this.router.post(this.pathGetAllCount, cors(),this.getAllCount);
+        this.router.post(this.pathGetCountByUserId, cors(),this.getCountByUserId);
 
     }
     formatDataCreatePieceAndUpdatePiece(requestData:any){
@@ -108,7 +109,6 @@ class PieceController {
         response.send(result)
     }
     getPieceByUserId = async (request: express.Request, response: express.Response) => {
-    
         const result = await this.pieceRepository.getPieceByUserId(request)
         response.send(result)
     }
@@ -117,11 +117,13 @@ class PieceController {
         response.send(result);
     }
     getAllCount = async (request: express.Request, response: express.Response) => {
-        console.log("cpntroller getallCount");
         const result = await this.pieceRepository.getAllCount(request);
         response.send(result);
     }
-    
+    getCountByUserId = async (request: express.Request, response: express.Response) => {
+        const result = await this.pieceRepository.getCountByUserId(request);
+        response.send(result);
+    }
 }
 
 export default PieceController;
