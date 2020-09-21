@@ -156,7 +156,7 @@ export class PieceRepository {
 					}
 				},
 				orderBy: {
-					created: 'asc'
+					id: 'desc'
 				}
 			})
 			const iResponse: IResponse = {
@@ -261,7 +261,7 @@ export class PieceRepository {
 					}
 				},
 				orderBy: {
-					created: 'asc'
+					id: 'desc'
 				}
 			})
 			const iResponse: IResponse = {
