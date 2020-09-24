@@ -4,6 +4,7 @@ import { IResponse } from '../model/index';
 import { group } from 'console';
 import { mainModule } from 'process';
 //const prisma = new PrismaClient()
+import { Approval } from '../model/approval'; 
 
 const prisma = new PrismaClient({
 	errorFormat: 'minimal',
@@ -19,11 +20,11 @@ prisma.$on('query', e => {
 })
 
 export class PieceRepository {
-
-	result: any;
-	mymap: Map<string, number> | undefined
-	async post(req: any) {
-		console.log(req, "kkkkkkkkk");
+	
+	result:any;
+	mymap:Map<string, number> | undefined
+	async post(req: any) {	
+		//console.log(req,"kkkkkkkkk");
 		//console.dir(req.video_info.sentences);	
 		try {
 			// const result = null;
@@ -102,6 +103,11 @@ export class PieceRepository {
 					status: req.body.status
 				}
 			})
+			
+			if(req.body.status == 'PUBLISH'){
+				Approval.approve(req.body.id);
+			}
+			
 			const iResponse: IResponse = {
 				statusCode: "200",
 				message: "Data updated successfully",
@@ -416,5 +422,9 @@ export class PieceRepository {
 		} finally {
 			async () => await prisma.$disconnect()
 		}
+	}
+
+	private callApproval(){
+
 	}
 }
