@@ -1,6 +1,6 @@
 
 import { PrismaClient } from '@prisma/client'
-import {IResponse} from '../model/index';
+import { IResponse } from '../model/index';
 import { group } from 'console';
 import { mainModule } from 'process';
 //const prisma = new PrismaClient()
@@ -9,21 +9,21 @@ const prisma = new PrismaClient({
 	errorFormat: 'minimal',
 	log: [
 		{
-		  emit: 'event',
-		  level: 'query',
+			emit: 'event',
+			level: 'query',
 		},
-	  ],
-  })
-  prisma.$on('query', e => {
+	],
+})
+prisma.$on('query', e => {
 	e.query, console.log(e)
-  })
+})
 
 export class PieceRepository {
-	
-	result:any;
-	mymap:Map<string, number> | undefined
-	async post(req: any) {	
-		console.log(req,"kkkkkkkkk");
+
+	result: any;
+	mymap: Map<string, number> | undefined
+	async post(req: any) {
+		console.log(req, "kkkkkkkkk");
 		//console.dir(req.video_info.sentences);	
 		try {
 			// const result = null;
@@ -41,9 +41,9 @@ export class PieceRepository {
 			// this.result = await prisma.piece.upsert({
 			// 	where: { id: req.id },
 			// 	update: {
-				
+
 			// 		video_info:{
-						
+
 			// 			update:req.data.video_info	
 			// 		},
 			// 	},
@@ -54,102 +54,102 @@ export class PieceRepository {
 			// const user = await prisma.piece.create({
 			// 	data:req
 			//   });
-			  const sentence = await prisma.video_info.update(req);
+			const sentence = await prisma.video_info.update(req);
 		} catch (error) {
 			console.error(error);
 			return error;
-		}finally{
+		} finally {
 			async () => await prisma.$disconnect();
 		}
-		
+
 	}
 
 	async createPieceAndVideo(req: any) {
-		
+
 		try {
 			const result = await prisma.piece.create({
 				data: req.data
 			})
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Data created successfully",
+				statusCode: "200",
+				message: "Data created successfully",
 				data: result,
-				error:""
+				error: ""
 			}
 			return iResponse;
 		} catch (error) {
 			console.error(error);
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Something went worng",
-				data:"",
-				error:error
+				statusCode: "200",
+				message: "Something went worng",
+				data: "",
+				error: error
 			}
 			return iResponse;
-		}finally{
+		} finally {
 			async () => await prisma.$disconnect();
 		}
-		
+
 	}
-	async updatePiece(req: any) {	
+	async updatePiece(req: any) {
 		try {
 			const result = await prisma.piece.update({
-				where:{
-					id:req.body.id
+				where: {
+					id: req.body.id
 				},
-				data:{
-					title:req.body.title,
-					status:req.body.status
+				data: {
+					title: req.body.title,
+					status: req.body.status
 				}
 			})
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Data updated successfully",
+				statusCode: "200",
+				message: "Data updated successfully",
 				data: result,
-				error:""
+				error: ""
 			}
 			return iResponse;
 		} catch (error) {
 			console.error(error);
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Something went worng",
-				data:"",
-				error:error
+				statusCode: "200",
+				message: "Something went worng",
+				data: "",
+				error: error
 			}
 			return iResponse;
-		}finally{
+		} finally {
 			async () => await prisma.$disconnect()
 		}
-		
+
 	}
-	
+
 	async get(req: any) {
 		try {
 			const result = await prisma.piece.findMany({
-				skip:req.body.skip,
-				take:req.body.take,
+				skip: req.body.skip,
+				take: req.body.take,
 				where: {
-					OR:req.body.status
+					OR: req.body.status
 				},
 				select: {
 					id: true,
 					user_id: true,
 					status: true,
-					title:true,
-					video_info:{
-						where:{
-							OR:req.body.status
+					title: true,
+					video_info: {
+						where: {
+							OR: req.body.status
 						},
-						select:{
-							id:true,
-							video_url:true,
-							video_id:true,
-							status:true,
-							sentences:{
-								select:{
-									id:true,
-									sentence:true
+						select: {
+							id: true,
+							video_url: true,
+							video_id: true,
+							status: true,
+							sentences: {
+								select: {
+									id: true,
+									sentence: true
 								}
 							}
 						}
@@ -160,28 +160,28 @@ export class PieceRepository {
 				}
 			})
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Fetch all data successfully",
-				data:result,
-				error:""
+				statusCode: "200",
+				message: "Fetch all data successfully",
+				data: result,
+				error: ""
 			}
-			return iResponse;	
+			return iResponse;
 		} catch (error) {
 			console.error(error);
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Something went worng",
-				data:"",
-				error:error
+				statusCode: "200",
+				message: "Something went worng",
+				data: "",
+				error: error
 			}
 			return iResponse;
-		}finally{
+		} finally {
 			async () => await prisma.$disconnect();
-		}	
+		}
 	}
 	async getPieceById(req: any) {
 		try {
-			const result = await prisma.piece.findUnique({				
+			const result = await prisma.piece.findUnique({
 				where: {
 					id: parseInt(req.params.id)
 				},
@@ -189,79 +189,79 @@ export class PieceRepository {
 					id: true,
 					user_id: true,
 					status: true,
-					title:true,
-					video_info:{
-						where:{
-							status:req.params.status
+					title: true,
+					video_info: {
+						where: {
+							status: req.params.status
 						},
-						select:{
-							id:true,
-							video_url:true,
-							video_id:true,
-							status:true,
-							sentences:{
-								select:{
-									id:true,
-									sentence:true
+						select: {
+							id: true,
+							video_url: true,
+							video_id: true,
+							status: true,
+							sentences: {
+								select: {
+									id: true,
+									sentence: true
 								}
 							}
 						}
 					},
-					source_piece:{
-						select:{
-							id:true,
-							name:true,
-							url:true
+					source_piece: {
+						select: {
+							id: true,
+							name: true,
+							url: true
 						}
 					}
 				}
 			})
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Fetch single data successfully",
-				data:result,
-				error:""
+				statusCode: "200",
+				message: "Fetch single data successfully",
+				data: result,
+				error: ""
 			}
-			return iResponse;	
+			return iResponse;
 		} catch (error) {
 			console.error(error);
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Something went worng",
-				data:"",
-				error:error
+				statusCode: "200",
+				message: "Something went worng",
+				data: "",
+				error: error
 			}
 			return iResponse;
-		}finally{
+		} finally {
 			async () => await prisma.$disconnect();
-		}	
+		}
 	}
 	async getPieceByUserId(req: any) {
 		try {
-			const result = await prisma.piece.findMany({	
-				skip:req.body.skip,
-				take:req.body.take,			
+			const result = await prisma.piece.findMany({
+				skip: req.body.skip,
+				take: req.body.take,
 				where: {
-					OR:req.body.status,					
-					AND:{
+					OR: req.body.status,
+					AND: {
 						user_id: req.body.user_id,
-					}				
+					}
 				},
 				select: {
 					id: true,
 					user_id: true,
 					status: true,
-					title:true,
-					video_info:{
-						select:{
-							id:true,
-							video_url:true,
-							video_id:true,
-							status:true,
-							sentences:{
-								select:{
-									id:true,
-									sentence:true
+					title: true,
+					video_info: {
+						select: {
+							id: true,
+							video_url: true,
+							video_id: true,
+							status: true,
+							sentences: {
+								select: {
+									id: true,
+									sentence: true
 								}
 							}
 						}
@@ -272,148 +272,148 @@ export class PieceRepository {
 				}
 			})
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Fetch user data successfully",
-				data:result,
-				error:""
+				statusCode: "200",
+				message: "Fetch user data successfully",
+				data: result,
+				error: ""
 			}
-			return iResponse;	
+			return iResponse;
 		} catch (error) {
 			console.error(error);
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Something went worng",
-				data:"",
-				error:error
+				statusCode: "200",
+				message: "Something went worng",
+				data: "",
+				error: error
 			}
 			return iResponse;
-		}finally{
-		async () => await prisma.$disconnect()
-		}	
+		} finally {
+			async () => await prisma.$disconnect()
+		}
 	}
-	async deletePiece(req: any) {	
+	async deletePiece(req: any) {
 		try {
 			const result = await prisma.piece.update({
-				where:{
-					id:parseInt(req.params.id)
+				where: {
+					id: parseInt(req.params.id)
 				},
-				data:{
-					status:"DELETE",
+				data: {
+					status: "DELETE",
 				}
 			})
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Data deleted successfully",
+				statusCode: "200",
+				message: "Data deleted successfully",
 				data: result,
-				error:""
+				error: ""
 			}
 			return iResponse;
 		} catch (error) {
 			console.error(error);
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Something went worng",
-				data:"",
-				error:error
+				statusCode: "200",
+				message: "Something went worng",
+				data: "",
+				error: error
 			}
 			return iResponse;
-		}finally{
+		} finally {
 			async () => await prisma.$disconnect()
-		}		
+		}
 	}
 	async getAllCount(req: any) {
 		try {
 			const Allresult = await prisma.piece.count()
 			const draftResult = await prisma.piece.count({
-				where:{
-					status:"DRAFT"
+				where: {
+					status: "DRAFT"
 				}
 			})
 			const publishedResult = await prisma.piece.count({
-				where:{
-					status:"PUBLISH"
+				where: {
+					status: "PUBLISH"
 				}
 			})
 			const deletedResult = await prisma.piece.count({
-				where:{
-					status:"DELETE"
+				where: {
+					status: "DELETE"
 				}
 			})
-			
+
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Fetch count successfully",
-				data:{
-					"All":Allresult,
-					"Draft":draftResult,
-					"Published":publishedResult,
-					"Deleted":deletedResult
+				statusCode: "200",
+				message: "Fetch count successfully",
+				data: {
+					"All": Allresult,
+					"Draft": draftResult,
+					"Published": publishedResult,
+					"Deleted": deletedResult
 				},
-				error:""
+				error: ""
 			}
 			return iResponse;
 		} catch (error) {
 			console.error(error);
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Something went worng",
-				data:"",
-				error:error
+				statusCode: "200",
+				message: "Something went worng",
+				data: "",
+				error: error
 			}
 			return iResponse;
-		}finally{
+		} finally {
 			async () => await prisma.$disconnect()
-		}		
+		}
 	}
 	async getCountByUserId(req: any) {
 		try {
 			const Allresult = await prisma.piece.count({
-				where:{
-					user_id:req.body.user_id
+				where: {
+					user_id: req.body.user_id
 				}
 			})
 			const draftResult = await prisma.piece.count({
-				where:{
-					status:"DRAFT",
-					user_id:req.body.user_id
+				where: {
+					status: "DRAFT",
+					user_id: req.body.user_id
 				}
 			})
 			const publishedResult = await prisma.piece.count({
-				where:{
-					status:"PUBLISH",
-					user_id:req.body.user_id
+				where: {
+					status: "PUBLISH",
+					user_id: req.body.user_id
 				}
 			})
 			const deletedResult = await prisma.piece.count({
-				where:{
-					status:"DELETE",
-					user_id:req.body.user_id
+				where: {
+					status: "DELETE",
+					user_id: req.body.user_id
 				}
 			})
-			
+
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Fetch count successfully",
-				data:{
-					"All":Allresult,
-					"Draft":draftResult,
-					"Published":publishedResult,
-					"Deleted":deletedResult
+				statusCode: "200",
+				message: "Fetch count successfully",
+				data: {
+					"All": Allresult,
+					"Draft": draftResult,
+					"Published": publishedResult,
+					"Deleted": deletedResult
 				},
-				error:""
+				error: ""
 			}
 			return iResponse;
 		} catch (error) {
 			console.error(error);
 			const iResponse: IResponse = {
-				statusCode:"200",
-				message:"Something went worng",
-				data:"",
-				error:error
+				statusCode: "200",
+				message: "Something went worng",
+				data: "",
+				error: error
 			}
 			return iResponse;
-		}finally{
+		} finally {
 			async () => await prisma.$disconnect()
-		}		
+		}
 	}
 }
