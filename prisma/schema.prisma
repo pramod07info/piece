@@ -8,13 +8,14 @@ datasource db {
 }
 
 model piece {
-  id         Int          @id @default(autoincrement())
-  user_id    String?
-  title      String?
-  status     String?
-  created    DateTime?    @default(now())
-  updated    DateTime?
-  video_info video_info[]
+  id           Int            @id @default(autoincrement())
+  user_id      String?
+  title        String?
+  status       String?
+  created      DateTime?      @default(now())
+  updated      DateTime?
+  source_piece source_piece[]
+  video_info   video_info[]
 }
 
 model sentences {
@@ -36,4 +37,16 @@ model video_info {
   status    String?
   piece     piece?      @relation(fields: [piece_id], references: [id])
   sentences sentences[]
+}
+
+model source_piece {
+  id       Int       @id @default(autoincrement())
+  url      String?
+  name     String?
+  created  DateTime? @default(now())
+  updated  DateTime?
+  piece_id Int?
+  piece    piece?    @relation(fields: [piece_id], references: [id])
+
+  @@index([piece_id], name: "fki_source_piece_fkey")
 }

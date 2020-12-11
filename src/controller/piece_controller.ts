@@ -3,6 +3,7 @@ import { IPiece } from '../model/index'
 import { PieceRepository } from '../repositories/index'
 import { isArray } from 'util';
 import cors from 'cors';
+import { SSL_OP_CISCO_ANYCONNECT } from 'constants';
 class PieceController {
     private pieceRepository = new PieceRepository();
     public path = '/piece';
@@ -30,32 +31,56 @@ class PieceController {
 
 }
     formatDataCreatePieceAndUpdatePiece(requestData:any){
-        let  actualData = {      
-             title:"",
-             user_id: "",
-             status:"",
-             video_info:{
-                 create:  [] as  any
-             }
-           };
+        var  actualData:any ;
+        if(!requestData.hasOwnProperty('source_piece')){
+            actualData = {      
+                title:"",
+                user_id: "",
+                status:"",
+                video_info:{
+                    create:  [] as  any
+                }
+              };
+        }else{
+            actualData = {      
+                title:"",
+                user_id: "",
+                status:"",
+                video_info:{
+                    create:  [] as  any
+                },
+                source_piece:{
+                    create: [] as any
+                }
+              };
+              requestData.source_piece?.forEach(function(value: any) {
+                let source_piece = {
+                    url:"",
+                    name:""
+                };
+                source_piece.name = value.url;
+                source_piece.url = value.name;
+                actualData.source_piece.create.push(source_piece);
+            });
+        }
+
+        
         actualData.title =requestData.title;
         actualData.status =requestData.status; 
         actualData.user_id =requestData.user_id;
 
-        requestData.video_info.forEach(function (value :any) {     
+        requestData.video_info?.forEach(function (value :any) {     
             let video_info ={
                 video_url:"",
-                status:"",
-                sentences:{
-                    create: ''
-                }
+                status:""
             };
             video_info.video_url = value.video_url;
             video_info.status = value.status;
-            video_info.sentences.create = value.sentences;
+           // video_info.sentences.create = value.sentences;
             actualData.video_info.create.push(video_info);
               
         });
+        
         return actualData;
     }
     

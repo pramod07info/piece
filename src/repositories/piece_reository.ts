@@ -3,20 +3,20 @@ import { PrismaClient } from '@prisma/client'
 import {IResponse} from '../model/index';
 import { group } from 'console';
 import { mainModule } from 'process';
-const prisma = new PrismaClient()
+//const prisma = new PrismaClient()
 
-// const prisma = new PrismaClient({
-// 	errorFormat: 'minimal',
-// 	log: [
-// 		{
-// 		  emit: 'event',
-// 		  level: 'query',
-// 		},
-// 	  ],
-//   })
-// //   prisma.$on('query', e => {
-// // 	e.query, console.log(e)
-// //   })
+const prisma = new PrismaClient({
+	errorFormat: 'minimal',
+	log: [
+		{
+		  emit: 'event',
+		  level: 'query',
+		},
+	  ],
+  })
+  prisma.$on('query', e => {
+	e.query, console.log(e)
+  })
 
 export class PieceRepository {
 	
@@ -59,12 +59,12 @@ export class PieceRepository {
 			console.error(error);
 			return error;
 		}finally{
-			//async () => await prisma.$disconnect();
+			async () => await prisma.$disconnect();
 		}
 		
 	}
 
-	async createPieceAndVideo(req: any) {	
+	async createPieceAndVideo(req: any) {
 		
 		try {
 			const result = await prisma.piece.create({
@@ -87,7 +87,7 @@ export class PieceRepository {
 			}
 			return iResponse;
 		}finally{
-			//async () => await prisma.$disconnect()
+			async () => await prisma.$disconnect();
 		}
 		
 	}
@@ -119,7 +119,7 @@ export class PieceRepository {
 			}
 			return iResponse;
 		}finally{
-			//async () => await prisma.$disconnect()
+			async () => await prisma.$disconnect()
 		}
 		
 	}
@@ -176,12 +176,12 @@ export class PieceRepository {
 			}
 			return iResponse;
 		}finally{
-			//async () => await prisma.disconnect()
+			async () => await prisma.$disconnect();
 		}	
 	}
 	async getPieceById(req: any) {
 		try {
-			const result = await prisma.piece.findOne({				
+			const result = await prisma.piece.findUnique({				
 				where: {
 					id: parseInt(req.params.id)
 				},
@@ -206,6 +206,13 @@ export class PieceRepository {
 								}
 							}
 						}
+					},
+					source_piece:{
+						select:{
+							id:true,
+							name:true,
+							url:true
+						}
 					}
 				}
 			})
@@ -226,7 +233,7 @@ export class PieceRepository {
 			}
 			return iResponse;
 		}finally{
-			//async () => await prisma.disconnect()
+			async () => await prisma.$disconnect();
 		}	
 	}
 	async getPieceByUserId(req: any) {
@@ -281,7 +288,7 @@ export class PieceRepository {
 			}
 			return iResponse;
 		}finally{
-		//	async () => await prisma.disconnect()
+		async () => await prisma.$disconnect()
 		}	
 	}
 	async deletePiece(req: any) {	
@@ -355,7 +362,7 @@ export class PieceRepository {
 			}
 			return iResponse;
 		}finally{
-			//async () => await prisma.$disconnect()
+			async () => await prisma.$disconnect()
 		}		
 	}
 	async getCountByUserId(req: any) {
@@ -406,7 +413,7 @@ export class PieceRepository {
 			}
 			return iResponse;
 		}finally{
-			//async () => await prisma.$disconnect()
+			async () => await prisma.$disconnect()
 		}		
 	}
 }
