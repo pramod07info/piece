@@ -27,12 +27,12 @@ export class SentencesRepository {
 			}
 			return iResponse;
 		} catch (error) {
-			console.error(error);
+			console.error(error.message);
 			const iResponse: IResponse = {
 				statusCode: "200",
 				message: "Something went worng",
 				data: "",
-				error: error
+				error: error.message
 			}
 			return iResponse;
 		} finally {
@@ -59,12 +59,12 @@ export class SentencesRepository {
 			}
 			return iResponse;
 		} catch (error) {
-			console.error(error);
+			console.error(error.message);
 			const iResponse: IResponse = {
 				statusCode: "200",
 				message: "Something went worng",
 				data: "",
-				error: error
+				error: error.message
 			}
 			return iResponse;
 		} finally {
@@ -86,12 +86,12 @@ export class SentencesRepository {
 			}
 			return iResponse;
 		} catch (error) {
-			console.error(error);
+			console.error(error.message);
 			const iResponse: IResponse = {
 				statusCode: "200",
 				message: "Something went worng",
 				data: "",
-				error: error
+				error: error.message
 			}
 			return iResponse;
 		} finally {

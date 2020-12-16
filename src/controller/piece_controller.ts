@@ -12,6 +12,7 @@ class PieceController {
     public pathPieceUserId = '/piece/getPieceByUserId';
     public pathGetAllCount = '/piece/getAllCount';
     public pathGetCountByUserId = '/piece/getCountByUserId';
+    public pathUpdateTOArchive = '/piece/updateToArchive';
     public router = express.Router();
     public app = express();
 
@@ -28,6 +29,7 @@ class PieceController {
         this.router.delete(this.pathDeletePiece,cors(), this.deletePiece);
         this.router.post(this.pathGetAllCount, cors(),this.getAllCount);
         this.router.post(this.pathGetCountByUserId, cors(),this.getCountByUserId);
+        this.router.put(this.pathUpdateTOArchive, cors(),this.updateToArchive);
 
 }
     formatDataCreatePieceAndUpdatePiece(requestData:any){
@@ -146,6 +148,10 @@ class PieceController {
     }
     getCountByUserId = async (request: express.Request, response: express.Response) => {
         const result = await this.pieceRepository.getCountByUserId(request);
+        response.send(result);
+    }
+    updateToArchive = async (request: express.Request, response: express.Response) => {
+        const result = await this.pieceRepository.updateToArchive();
         response.send(result);
     }
 }
