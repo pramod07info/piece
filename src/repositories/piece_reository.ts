@@ -423,12 +423,4 @@ export class PieceRepository {
 			async () => await prisma.$disconnect()
 		}
 	}
-
-	private callApproval(){
-
-	}
-
-	private callApproval(){
-
-	}
 }
