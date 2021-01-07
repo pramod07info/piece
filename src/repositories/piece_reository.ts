@@ -427,4 +427,8 @@ export class PieceRepository {
 	private callApproval(){
 
 	}
+
+	private callApproval(){
+
+	}
 }
