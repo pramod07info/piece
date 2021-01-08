@@ -74,6 +74,8 @@ class PieceController {
         actualData.title =requestData.title;
         actualData.status =requestData.status; 
         actualData.user_id =requestData.user_id;
+        actualData.name = requestData.name;
+        actualData.email = requestData.email;
 
         requestData.video_info?.forEach(function (value :any) {     
             let video_info ={
