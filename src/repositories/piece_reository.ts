@@ -57,8 +57,8 @@ export class PieceRepository {
 			//   });
 			const sentence = await prisma.video_info.update(req);
 		} catch (error) {
-			console.error(error);
-			return error;
+			console.error(error.message);
+			return error.message;
 		} finally {
 			async () => await prisma.$disconnect();
 		}
@@ -79,12 +79,12 @@ export class PieceRepository {
 			}
 			return iResponse;
 		} catch (error) {
-			console.error(error);
+			console.error(error.message);
 			const iResponse: IResponse = {
 				statusCode: "200",
 				message: "Something went worng",
 				data: "",
-				error: error
+				error: error.message
 			}
 			return iResponse;
 		} finally {
@@ -116,12 +116,12 @@ export class PieceRepository {
 			}
 			return iResponse;
 		} catch (error) {
-			console.error(error);
+			console.error(error.message);
 			const iResponse: IResponse = {
 				statusCode: "200",
 				message: "Something went worng",
 				data: "",
-				error: error
+				error: error.message
 			}
 			return iResponse;
 		} finally {
@@ -173,12 +173,12 @@ export class PieceRepository {
 			}
 			return iResponse;
 		} catch (error) {
-			console.error(error);
+			console.error(error.message);
 			const iResponse: IResponse = {
 				statusCode: "200",
 				message: "Something went worng",
 				data: "",
-				error: error
+				error: error.message
 			}
 			return iResponse;
 		} finally {
@@ -195,6 +195,8 @@ export class PieceRepository {
 					id: true,
 					user_id: true,
 					status: true,
+					name:true,
+					email:true,
 					title: true,
 					video_info: {
 						where: {
@@ -230,12 +232,12 @@ export class PieceRepository {
 			}
 			return iResponse;
 		} catch (error) {
-			console.error(error);
+			console.error(error.message);
 			const iResponse: IResponse = {
 				statusCode: "200",
 				message: "Something went worng",
 				data: "",
-				error: error
+				error: error.message
 			}
 			return iResponse;
 		} finally {
@@ -257,6 +259,8 @@ export class PieceRepository {
 					id: true,
 					user_id: true,
 					status: true,
+					name:true,
+					email:true,
 					title: true,
 					video_info: {
 						select: {
@@ -285,12 +289,12 @@ export class PieceRepository {
 			}
 			return iResponse;
 		} catch (error) {
-			console.error(error);
+			console.error(error.message);
 			const iResponse: IResponse = {
 				statusCode: "200",
 				message: "Something went worng",
 				data: "",
-				error: error
+				error: error.message
 			}
 			return iResponse;
 		} finally {
@@ -315,12 +319,12 @@ export class PieceRepository {
 			}
 			return iResponse;
 		} catch (error) {
-			console.error(error);
+			console.error(error.message);
 			const iResponse: IResponse = {
 				statusCode: "200",
 				message: "Something went worng",
 				data: "",
-				error: error
+				error: error.message
 			}
 			return iResponse;
 		} finally {
@@ -364,7 +368,7 @@ export class PieceRepository {
 				statusCode: "200",
 				message: "Something went worng",
 				data: "",
-				error: error
+				error: error.message
 			}
 			return iResponse;
 		} finally {
@@ -416,11 +420,94 @@ export class PieceRepository {
 				statusCode: "200",
 				message: "Something went worng",
 				data: "",
-				error: error
+				error: error.message
 			}
 			return iResponse;
 		} finally {
 			async () => await prisma.$disconnect()
+		}
+	}
+	async updateToArchive() {
+		var datetime = require('node-datetime');
+		var past = '2020-12-14 02:43:19';
+		var pastDateTime = datetime.create(past);
+		pastDateTime.offsetInDays(-30);
+		var formatted = pastDateTime.format('yy-m-d H:M:S');
+		var date = new Date(formatted);
+		console.log("Date time ",formatted);
+		try {
+			const result = await prisma.piece.findMany({
+				where: {
+					
+					AND:[
+						{
+							created:{
+								lte:date
+							}
+						},
+						{
+							status:'PUBLISH'
+						}	
+											]
+				},
+				select: {
+					id: true,
+				}
+			})
+			var archiveList: number[] = [];
+			result.forEach((key,value)=>{
+				console.log(key.id);
+				archiveList.push(key.id);
+			})
+			
+			try {
+				const result = await prisma.piece.updateMany({
+					where: {
+						id:{in:archiveList}
+					},
+					data: {
+						status: 'ARCHIVE'
+					}
+				})
+				const iResponse: IResponse = {
+					statusCode: "200",
+					message: "Data updated successfully",
+					data: result,
+					error: ""
+				}
+				return iResponse;
+			} catch (error) {
+				console.error(error.message);
+				const iResponse: IResponse = {
+					statusCode: "200",
+					message: "Something went worng",
+					data: "",
+					error: error.message
+				}
+				return iResponse;
+			} finally {
+				async () => await prisma.$disconnect()
+			}
+	
+
+			const iResponse: IResponse = {
+				statusCode: "200",
+				message: "Fetch all data successfully",
+				data: archiveList,
+				error: ""
+			}
+			return iResponse;
+		} catch (error) {
+			console.error(error.message);
+			const iResponse: IResponse = {
+				statusCode: "200",
+				message: "Something went worng",
+				data: "",
+				error: error.message
+			}
+			return iResponse;
+		} finally {
+			async () => await prisma.$disconnect();
 		}
 	}
 }
