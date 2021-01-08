@@ -16,6 +16,7 @@ model piece {
   updated      DateTime?
   name         String?
   email        String?
+  nickname     String?
   source_piece source_piece[]
   video_info   video_info[]
 }

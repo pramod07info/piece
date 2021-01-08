@@ -197,6 +197,7 @@ export class PieceRepository {
 					status: true,
 					name:true,
 					email:true,
+					nickname:true,
 					title: true,
 					video_info: {
 						where: {
@@ -261,6 +262,7 @@ export class PieceRepository {
 					status: true,
 					name:true,
 					email:true,
+					nickname:true,
 					title: true,
 					video_info: {
 						select: {
