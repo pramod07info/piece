@@ -195,6 +195,8 @@ export class PieceRepository {
 					id: true,
 					user_id: true,
 					status: true,
+					name:true,
+					email:true,
 					title: true,
 					video_info: {
 						where: {
@@ -257,6 +259,8 @@ export class PieceRepository {
 					id: true,
 					user_id: true,
 					status: true,
+					name:true,
+					email:true,
 					title: true,
 					video_info: {
 						select: {

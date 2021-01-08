@@ -39,6 +39,8 @@ class PieceController {
                 title:"",
                 user_id: "",
                 status:"",
+                name:"",
+                email:"",
                 video_info:{
                     create:  [] as  any
                 }
@@ -48,6 +50,8 @@ class PieceController {
                 title:"",
                 user_id: "",
                 status:"",
+                name:"",
+                email:"",
                 video_info:{
                     create:  [] as  any
                 },
