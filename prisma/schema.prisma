@@ -12,10 +12,11 @@ model piece {
   user_id      String?
   title        String?
   status       String?
-  created      DateTime?
+  created      DateTime?      @default(now())
   updated      DateTime?
-  name         String?
   email        String?
+  name         String?
+  category_id  Int?
   source_piece source_piece[]
   video_info   video_info[]
 }
@@ -23,7 +24,7 @@ model piece {
 model sentences {
   sentence   String?
   video_id   Int?
-  created    DateTime?
+  created    DateTime?   @default(now())
   updated    DateTime?
   id         Int         @id @default(autoincrement())
   video_info video_info? @relation(fields: [video_id], references: [id])
@@ -34,7 +35,7 @@ model video_info {
   piece_id  Int?
   video_id  String?
   video_url String?
-  created   DateTime?
+  created   DateTime?   @default(now())
   updated   DateTime?
   status    String?
   piece     piece?      @relation(fields: [piece_id], references: [id])

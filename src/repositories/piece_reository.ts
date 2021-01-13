@@ -100,7 +100,8 @@ export class PieceRepository {
 				},
 				data: {
 					title: req.body.title,
-					status: req.body.status
+					status: req.body.status,
+					category_id:req.body.category_id
 				}
 			})
 			
@@ -143,6 +144,7 @@ export class PieceRepository {
 					user_id: true,
 					status: true,
 					title: true,
+					category_id:true,
 					video_info: {
 						where: {
 							OR: req.body.status
@@ -198,6 +200,7 @@ export class PieceRepository {
 					name:true,
 					email:true,
 					title: true,
+					category_id:true,
 					video_info: {
 						where: {
 							status: req.params.status
@@ -262,6 +265,7 @@ export class PieceRepository {
 					name:true,
 					email:true,
 					title: true,
+					category_id:true,
 					video_info: {
 						select: {
 							id: true,
