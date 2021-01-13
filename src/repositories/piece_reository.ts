@@ -199,6 +199,7 @@ export class PieceRepository {
 					status: true,
 					name:true,
 					email:true,
+					nickname:true,
 					title: true,
 					category_id:true,
 					video_info: {
@@ -264,6 +265,7 @@ export class PieceRepository {
 					status: true,
 					name:true,
 					email:true,
+					nickname:true,
 					title: true,
 					category_id:true,
 					video_info: {

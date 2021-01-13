@@ -42,6 +42,7 @@ class PieceController {
                 name:"",
                 email:"",
                 category_id:"",
+                nickname:"",
                 video_info:{
                     create:  [] as  any
                 }
@@ -54,6 +55,7 @@ class PieceController {
                 name:"",
                 email:"",
                 category_id:"",
+                nickname:"",
                 video_info:{
                     create:  [] as  any
                 },
@@ -79,6 +81,7 @@ class PieceController {
         actualData.name = requestData.name;
         actualData.email = requestData.email;
         actualData.category_id = requestData.category_id;
+        actualData.nickname = requestData.nickname;
 
         requestData.video_info?.forEach(function (value :any) {     
             let video_info ={
