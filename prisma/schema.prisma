@@ -15,12 +15,9 @@ model piece {
   created      DateTime?      @default(now())
   updated      DateTime?
   email        String?
-<<<<<<< HEAD
   name         String?
   category_id  Int?
-=======
   nickname     String?
->>>>>>> 4c9b7e4c1af4f76aa757fc274ff01cc753d8dd67
   source_piece source_piece[]
   video_info   video_info[]
 }
